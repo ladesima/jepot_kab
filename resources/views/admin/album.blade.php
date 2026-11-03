@@ -71,8 +71,15 @@
                                 @php
                                     $cover = $album->photos->firstWhere('is_cover', 1);
                                 @endphp
-                                <img src="{{ $cover ? asset('storage/' . $cover->path) : 'https://via.placeholder.com/600x400.png?text=No+Cover' }}"
-                                    alt="Sampul {{ $album->nama }}" class="w-full h-48 object-cover rounded-t-lg">
+                                @if($cover && $cover->path)
+    <img src="{{ upload_asset($cover->path, 'galeri') }}"
+         alt="Sampul {{ $album->nama }}"
+         class="w-full h-48 object-cover rounded-t-lg">
+@else
+    <img src="https://via.placeholder.com/600x400.png?text=No+Cover"
+         alt="No Cover"
+         class="w-full h-48 object-cover rounded-t-lg">
+@endif
 
                                 <div class="p-4 flex-grow">
                                     <h4 class="text-lg font-bold text-gray-800">{{ $album->nama }}</h4>

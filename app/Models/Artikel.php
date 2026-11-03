@@ -13,5 +13,6 @@ class Artikel extends Model
     'gambar',
     'tanggal',
     'isi',
+    'views'
 ];
 }

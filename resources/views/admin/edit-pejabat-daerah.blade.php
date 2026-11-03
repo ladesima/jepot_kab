@@ -140,7 +140,7 @@
                                 @if ($data->foto)
                                     <div class="mt-2">
                                         <p>Foto Saat Ini:</p>
-                                        <img src="{{ asset('storage/' . $data->foto) }}"
+                                        <img src="{{ upload_asset($data->foto, 'pejabat') }}"
                                             alt="Foto {{ $data->nama }}" style="max-width: 200px; height: auto;">
                                     </div>
                                 @endif

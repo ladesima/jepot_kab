@@ -1,0 +1,221 @@
+/* ==========================================================================
+   INTERACTIVE ANIMATIONS & MICRO-INTERACTIONS ENGINE - KABUPATEN JENEPONTO
+   Smooth, High-Performance, Accessible (respects prefers-reduced-motion)
+   ========================================================================== */
+
+/* 1. Global Smooth Scroll & Transitions */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 2. Scroll Progress Bar (Top of Screen) */
+#scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3.5px;
+    width: 0%;
+    background: linear-gradient(90deg, #06b6d4, #14b8a6, #10b981, #f59e0b);
+    z-index: 99999;
+    box-shadow: 0 0 10px rgba(20, 184, 166, 0.7);
+    transition: width 0.1s cubic-bezier(0.1, 0.9, 0.2, 1);
+    pointer-events: none;
+}
+
+/* 3. Universal Scroll Reveal System */
+.reveal,
+.reveal-card,
+[data-reveal],
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.revealed,
+.reveal-card.revealed,
+[data-reveal].revealed,
+.animate-on-scroll.revealed,
+.reveal.active,
+.reveal-card.active {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Stagger Delays */
+.delay-100 { transition-delay: 0.1s !important; }
+.delay-200 { transition-delay: 0.2s !important; }
+.delay-300 { transition-delay: 0.3s !important; }
+.delay-400 { transition-delay: 0.4s !important; }
+.delay-500 { transition-delay: 0.5s !important; }
+
+/* 4. Directional Reveals */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-zoom {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-zoom.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 5. Interactive Cards - Fluid Hover Lift & Ambient Glow */
+.group:hover,
+article:hover,
+.hover-lift:hover {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+/* Card Zoom effect on inner images */
+.group img,
+article img {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+/* 6. Floating Animation (Gentle hover effect for icons/badges) */
+@keyframes gentleFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+.animate-float {
+    animation: gentleFloat 4s ease-in-out infinite;
+}
+
+/* 7. Subtle Pulse Glow for CTA buttons */
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 25px rgba(13, 148, 136, 0.6);
+    }
+}
+
+.pulse-glow {
+    animation: pulseGlow 3s infinite;
+}
+
+/* 8. Shimmer Highlight Animation */
+@keyframes shimmerPass {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.shimmer-hover {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200% 100%;
+}
+.shimmer-hover:hover {
+    animation: shimmerPass 1.2s infinite;
+}
+
+/* 9. Floating Back to Top Button */
+#back-to-top-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #0d9488, #0284c7);
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.85);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.35s;
+    z-index: 9999;
+}
+
+#back-to-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+#back-to-top-btn:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 12px 25px rgba(13, 148, 136, 0.5);
+    background: linear-gradient(135deg, #0f766e, #0369a1);
+}
+
+#back-to-top-btn:active {
+    transform: scale(0.95);
+}
+
+/* 10. Table Row Hover Enhancements */
+table tbody tr {
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+table tbody tr:hover {
+    transform: scale(1.002);
+}
+
+/* 11. Navbar Dropdown Animation */
+.dropdown-menu:not(.hidden) {
+    animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 12. Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .reveal, .reveal-card, [data-reveal], .animate-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

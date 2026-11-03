@@ -5,26 +5,34 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Photo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
     /**
-     * Simpan foto baru ke dalam album
+     * Upload foto ke album
      */
     public function store(Request $request)
     {
         $request->validate([
             'album_id' => 'required|exists:albums,id',
-            'path.*'   => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            'path.*'   => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
 
+        $destinationPath = public_path('uploads/galeri');
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
+        }
+
         foreach ($request->file('path') as $file) {
-            $filePath = $file->store('photos', 'public');
+
+            $filename = time().'_'.uniqid().'.'.$file->getClientOriginalExtension();
+
+            $file->move($destinationPath, $filename);
 
             Photo::create([
                 'album_id'   => $request->album_id,
-                'path'       => $filePath,
+                'path'       => $filename,
                 'description'=> null,
                 'is_cover'   => false
             ]);
@@ -54,9 +62,10 @@ class PhotoController extends Controller
      */
     public function destroy(Photo $photo)
     {
-        // Hapus file fisik dari storage
-        if (Storage::disk('public')->exists($photo->path)) {
-            Storage::disk('public')->delete($photo->path);
+        $filePath = public_path('uploads/galeri/'.$photo->path);
+
+        if ($photo->path && file_exists($filePath)) {
+            unlink($filePath);
         }
 
         $photo->delete();
@@ -65,14 +74,13 @@ class PhotoController extends Controller
     }
 
     /**
-     * Set foto sebagai sampul album
+     * Set foto sebagai cover album
      */
     public function setCover(Photo $photo)
     {
-        // Hapus status cover pada foto lain di album yang sama
-        Photo::where('album_id', $photo->album_id)->update(['is_cover' => false]);
+        Photo::where('album_id', $photo->album_id)
+            ->update(['is_cover' => false]);
 
-        // Set foto ini sebagai cover
         $photo->update(['is_cover' => true]);
 
         return back()->with('success', 'Foto ini sekarang menjadi sampul album!');

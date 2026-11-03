@@ -46,22 +46,34 @@
                     <a href="{{ route('berita.show', $item->id) }}"
                         class="group block bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
                         <div class="overflow-hidden h-56">
-                            <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->judul }}"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <img src="{{ upload_asset($item->foto, 'berita') }}" 
+                class="w-full h-48 object-cover">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-3 text-gray-800 leading-snug group-hover:text-blue-700">
                                 {{ $item->judul }}
                             </h3>
-                            <div class="flex items-center space-x-4 text-xs text-gray-500 mt-4">
-                                {{-- Ganti dengan data penulis jika ada, jika tidak, gunakan default 'Admin' --}}
-                                <span class="flex items-center"><i
-                                        class="fas fa-user mr-2"></i>{{ $item->penulis ?? 'Admin' }}</span>
-                                <span class="flex items-center">
-                                    <i class="fas fa-calendar-alt mr-2"></i>
-                                    {{ \Carbon\Carbon::parse($item->tanggal_kejadian)->translatedFormat('d F Y') }}
-                                </span>
-                            </div>
+                            <div class="flex items-center justify-between text-xs text-gray-500 mt-4">
+
+    <div class="flex items-center space-x-4">
+        <span class="flex items-center">
+            <i class="fas fa-user mr-2"></i>
+            {{ $item->penulis ?? 'Admin' }}
+        </span>
+
+        <span class="flex items-center">
+            <i class="fas fa-calendar-alt mr-2"></i>
+            {{ \Carbon\Carbon::parse($item->tanggal_kejadian)->translatedFormat('d F Y') }}
+        </span>
+    </div>
+
+    {{-- 🔥 Views --}}
+    <span class="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full text-gray-600">
+        <i class="fas fa-eye text-gray-400"></i>
+        {{ $item->views }}
+    </span>
+
+</div>
                         </div>
                     </a>
                 @empty

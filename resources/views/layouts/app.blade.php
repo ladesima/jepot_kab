@@ -1,39 +1,125 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Website Jeneponto' }}</title>
+	@yield('meta_tags')
+    <script>
+        // Check initial theme before rendering to avoid FOUC
+        (function() {
+            const theme = localStorage.getItem('theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/theme-dark-light.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/interactive-animations.css') }}">
+    <script src="{{ asset('js/interactive-animations.js') }}" defer></script>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        @keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+.animate-fadeUp {
+    animation: fadeUp 0.9s ease forwards;
+}
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+.delay-200 {
+    animation-delay: .2s;
+}
+    </style>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Poppins', sans-serif;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+    <style>
+/* ========================= */
+/* SMOOTH SCROLL REVEAL     */
+/* ========================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s cubic-bezier(0.16,1,0.3,1),
+                transform 1s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+<style>
+/* =============================== */
+/* PER-CARD SMOOTH REVEAL SYSTEM  */
+/* =============================== */
+
+.reveal-card {
+    opacity: 0;
+    transform: translateY(60px) scale(0.96);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal-card.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+</style>
 </head>
+<body class="bg-gray-100">
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navbar')
+    {{-- NAVBAR USER --}}
+    @include('layouts.navbar')
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
+    {{-- CONTENT --}}
+    @yield('content')
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
-    </div>
+    {{-- FOOTER USER --}}
+    @include('layouts.footer')
+
+    @stack('scripts')
+    
+
 </body>
-
 </html>

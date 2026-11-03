@@ -23,19 +23,26 @@ class BeritaUserController extends Controller
     }
 
     public function show($id)
-    {
-        // Ambil berita yang sesuai
-        $berita = Berita::with('kategori')->findOrFail($id);
+{
+    // Ambil berita beserta relasi kategori
+    $berita = Berita::with('kategori')->findOrFail($id);
 
-        // Ambil 5 berita terbaru (kecuali berita yang sedang dibuka)
-        $beritaTerbaru = Berita::where('id', '!=', $id)
-            ->latest('tanggal_kejadian')
-            ->take(5)
-            ->get();
+    // Tambah jumlah views
+    $berita->increment('views');
 
-        // Ambil kategori untuk sidebar
-        $kategori = KategoriBerita::with('berita')->get();
+    // Ambil 5 berita terbaru (kecuali berita yang sedang dibuka)
+    $beritaTerbaru = Berita::where('id', '!=', $id)
+        ->latest('tanggal_kejadian')
+        ->take(5)
+        ->get();
 
-        return view('user.detail-berita', compact('berita', 'beritaTerbaru', 'kategori'));
-    }
+    // Ambil kategori untuk sidebar
+    $kategori = KategoriBerita::with('berita')->get();
+
+    return view('user.detail-berita', compact(
+        'berita',
+        'beritaTerbaru',
+        'kategori'
+    ));
+}
 }

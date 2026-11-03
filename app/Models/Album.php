@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Album extends Model
 {
     use HasFactory;
-    protected $fillable = ['nama', 'slug', 'deskripsi'];
+    protected $fillable = ['nama','views', 'slug', 'deskripsi'];
 
     // Relasi: Satu Album punya banyak Photo
     public function photos()

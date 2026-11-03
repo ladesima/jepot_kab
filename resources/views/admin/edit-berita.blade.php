@@ -87,12 +87,12 @@
                                     (Opsional)</label>
                                 <div class="mb-2">
                                     <span class="block text-sm text-gray-600 mb-1">Foto saat ini:</span>
-                                    <img src="{{ asset('storage/foto_berita/' . $berita->foto) }}"
+                                    <img src="{{ upload_asset($berita->foto, 'berita') }}"
                                         alt="{{ $berita->judul }}" class="h-24 w-auto rounded object-cover">
                                 </div>
                                 <input type="file" id="foto" name="foto"
                                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-                                <p class="mt-1 text-sm text-gray-500">Biarkan kosong jika tidak ingin mengganti foto.
+                                <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG, WEBP. Ukuran maks: 5MB. Biarkan kosong jika tidak ingin mengganti foto.
                                 </p>
                             </div>
 

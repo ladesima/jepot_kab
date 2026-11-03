@@ -25,7 +25,7 @@
 
             <div class="hidden lg:flex flex-col items-center justify-center bg-slate-800 p-12 text-white text-center">
                 {{-- Pastikan path ke logo Anda benar di folder public/images/ --}}
-                <img src="{{ asset('images/logo.png') }}" alt="Logo Kabupaten Jeneponto" class="w-28 h-28 mb-4">
+                <img src="{{ asset('images/download.png') }}" alt="Logo Kabupaten Jeneponto" class="w-28 h-28 mb-4">
                 <h1 class="text-3xl font-extrabold">KABUPATEN JENEPONTO</h1>
                 <p class="mt-2 text-slate-300">Portal Masuk Panel Admin</p>
             </div>
@@ -33,7 +33,7 @@
             <div class="p-8 md:p-12">
                 {{-- Logo untuk tampilan mobile --}}
                 <div class="lg:hidden text-center mb-8">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo Kabupaten Jeneponto"
+                    <img src="{{ asset('images/download.png') }}" alt="Logo Kabupaten Jeneponto"
                         class="w-20 h-20 mx-auto mb-2">
                     <h2 class="text-2xl font-bold text-gray-800">Admin Login</h2>
                 </div>
@@ -45,7 +45,6 @@
 
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
-
                     <div>
                         <x-input-label for="email" value="Alamat Email" class="font-semibold" />
                         <div class="relative mt-1">

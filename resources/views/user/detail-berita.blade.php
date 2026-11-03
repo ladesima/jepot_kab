@@ -50,8 +50,7 @@
 
                         {{-- Gambar Utama Berita --}}
                         <figure class="mb-8">
-                            <img src="{{ asset('storage/' . $berita->foto) }}" alt="{{ $berita->judul }}"
-                                class="w-full h-auto object-cover rounded-xl shadow-lg">
+                            <img src="{{ upload_asset($berita->foto, 'berita') }}" class="w-full rounded-lg">
                         </figure>
 
                         {{-- 

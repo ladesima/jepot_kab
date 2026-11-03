@@ -76,25 +76,54 @@
                     <h2 class="text-4xl font-bold text-gray-800">Galeri Album</h2>
                     <p class="text-lg text-gray-500 mt-2">Lihat dokumentasi kegiatan melalui album.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach ($albums as $album)
-                        <a href="{{ route('album.show', $album->id) }}"
-                            class="group relative rounded-xl shadow-lg overflow-hidden cursor-pointer">
-                            <img src="{{ $album->cover ? asset('storage/' . $album->cover->path) : 'https://via.placeholder.com/600x400.png?text=No+Cover' }}"
-                                alt="Thumbnail {{ $album->nama }}"
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div
-                                class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center">
-                                <i
-                                    class="fas fa-images text-7xl text-white/80 transform group-hover:scale-110 transition-transform duration-300"></i>
-                            </div>
-                            <div class="absolute bottom-0 left-0 p-4">
-                                <h3 class="text-white font-bold text-lg">{{ $album->nama }}</h3>
-                                <p class="text-white text-sm">{{ $album->photos->count() }} foto</p>
-                            </div>
-                        </a>
-                    @endforeach
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    @foreach ($albums as $album)
+        <a href="{{ route('album.show', $album->id) }}"
+           class="group relative h-[380px] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+
+            {{-- IMAGE --}}
+            <img 
+    src="{{ optional($album->cover)->path 
+        ? upload_asset($album->cover->path, 'galeri') 
+        : asset('images/no-image.png') }}"
+    alt="{{ $album->nama }}"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+            {{-- DARK OVERLAY --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" style="background-color: transparent !important;"></div>
+
+            {{-- ICON CENTER --}}
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="bg-white/20 backdrop-blur-md p-5 rounded-full transform group-hover:scale-110 transition duration-300">
+                    <i class="fas fa-images text-white text-3xl"></i>
                 </div>
+            </div>
+
+            {{-- BOTTOM CONTENT --}}
+            <div class="absolute bottom-0 left-0 w-full p-6 text-white">
+
+                <h3 class="text-xl font-semibold leading-snug mb-2">
+                    {{ $album->nama }}
+                </h3>
+
+                <div class="flex items-center justify-between text-sm text-white/90">
+
+                    <span>
+                        {{ $album->photos->count() }} foto
+                    </span>
+
+                    <span class="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-xs">
+                        <i class="fas fa-eye"></i>
+                        {{ number_format($album->views) }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+    @endforeach
+</div>
             </div>
         </section>
     </main>

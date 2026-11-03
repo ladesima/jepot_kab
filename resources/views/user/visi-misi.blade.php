@@ -42,8 +42,8 @@
             <div class="max-w-4xl mx-auto text-center">
                 <div class="mb-16">
                     <h2 class="text-4xl font-bold text-slate-800 mb-4">Visi</h2>
-                    <p class="text-lg text-gray-600">JENEPONTO SMART 2023</p>
-                    <p class="text-red-600 font-semibold mt-2 text-lg">BERDAYA SAING, MAJU, RELIGIUS & BERKELANJUTAN</p>
+                    <p class="text-lg text-gray-600">JENEPONTO BAHAGIA 2030</p>
+                    <p class="text-red-600 font-semibold mt-2 text-lg">Berkelanjutan, Tangguh, Berdayasaing, Religius, Inklusif dan Melaju.</p>
                 </div>
 
                 <div>
@@ -51,39 +51,31 @@
                     <ol class="text-left text-lg text-gray-700 space-y-4 max-w-3xl mx-auto">
                         <li class="flex">
                             <span class="mr-3 font-semibold">1.</span>
-                            <span>Mengakselerasi perbaikan Indeks Pembangunan Manusia</span>
+                            <span>Mengakselerasi Peningkatan Kualitas Hidup Masyarakat Secara Inklusif.</span>
                         </li>
                         <li class="flex">
                             <span class="mr-3 font-semibold">2.</span>
-                            <span>Meningkatkan kualitas Sumber Daya Manusia</span>
+                            <span>Mengakselerasi Penguatan Ekonomi Daerah Berbasis Potensi Strategik secara transformative, Inovatif, Produktif dan Berkelanjutan.</span>
                         </li>
                         <li class="flex">
                             <span class="mr-3 font-semibold">3.</span>
-                            <span>Mewujudkan peradaban birokrasi melalui tata kelola pemerintahan yang profesional,
-                                aspiratif, partisipatif dan transparan.</span>
+                            <span>MMengakselerasi Penguatan Kolaborasi dan Tata Kelola Pemerintahan yang Berintegritas dan Melayani.</span>
                         </li>
                         <li class="flex">
                             <span class="mr-3 font-semibold">4.</span>
-                            <span>Melaksanakan pengembangan wilayah dan pembangunan infrastruktur wilayah secara
-                                merata.</span>
+                            <span>Meningkatkan Pembangunan Infrastruktur yang Berkualitas dan Berwawasan Lingkungan.</span>
                         </li>
                         <li class="flex">
                             <span class="mr-3 font-semibold">5.</span>
-                            <span>Meningkatkan perekonomian daerah melalui pengelolaan sumber daya daerah dan lingkungan
-                                hidup secara berkelanjutan dan investasi yang berkeadilan</span>
+                            <span>Memperkuat Ketahanan Sosial Budaya dan Kualitas Lingkungan Hidup</span>
                         </li>
                         <li class="flex">
                             <span class="mr-3 font-semibold">6.</span>
-                            <span>Mewujudkan tata kelola keuangan daerah yang efektif, efesien, produktif, transparan
-                                dan akuntabel.</span>
+                            <span>Meningkatkan Keamanan, Ketentraman, Ketertiban dan religiusitas Kehidupan Masyarakat.</span>
                         </li>
                         <li class="flex">
                             <span class="mr-3 font-semibold">7.</span>
-                            <span>Meningkatkan kualitas kehidupan beragama dan nilai-nilai budaya</span>
-                        </li>
-                        <li class="flex">
-                            <span class="mr-3 font-semibold">8.</span>
-                            <span>Menegakkan supremasi hukum, keamanan dan ketertiban</span>
+                            <span>Meningkatkan Sinergitas Pembangunan Wilayah dan Daya saing Daerah</span>
                         </li>
                     </ol>
                 </div>

@@ -145,8 +145,34 @@
                                 @if ($data->foto)
                                     <div class="mt-2">
                                         <p>Foto Saat Ini:</p>
-                                        <img src="{{ asset('storage/' . $data->foto) }}"
+                                        <img src="{{ upload_asset($data->foto, 'kepala-daerah') }}"
                                             alt="Foto {{ $data->nama }}" style="max-width: 200px; height: auto;">
+                                    </div>
+                                @endif
+                            </div>
+
+                            {{-- Dokumen LHKPN --}}
+                            <div class="mb-3">
+                                <label for="file_lhkpn" class="form-label">Dokumen LHKPN (PDF)</label>
+                                <input class="form-control @error('file_lhkpn') is-invalid @enderror" type="file"
+                                    id="file_lhkpn" name="file_lhkpn" accept=".pdf,application/pdf">
+                                <small class="text-muted">Format file: PDF (Maksimal 10MB). Kosongkan jika tidak ingin mengubah dokumen.</small>
+                                @error('file_lhkpn')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                                @if (!empty($data->file_lhkpn))
+                                    <div class="mt-2 p-3 bg-light rounded border d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-solid fa-file-pdf text-danger fa-2x me-3"></i>
+                                            <div>
+                                                <div class="fw-semibold text-dark">Dokumen LHKPN Tersedia</div>
+                                                <a href="{{ upload_asset($data->file_lhkpn, 'lhkpn') }}" target="_blank" class="text-primary text-decoration-none small">
+                                                    <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Lihat Dokumen Saat Ini
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <span class="badge bg-success">Sudah Diupload</span>
                                     </div>
                                 @endif
                             </div>

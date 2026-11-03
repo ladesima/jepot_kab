@@ -65,9 +65,9 @@
                         @forelse ($album->photos as $photo)
                             <div class="relative bg-white rounded-lg shadow-md overflow-hidden group aspect-square">
                                 {{-- Foto --}}
-                                <img src="{{ asset('storage/' . $photo->path) }}"
-                                    alt="{{ $photo->description ?? 'Foto ' . $album->nama }}"
-                                    class="w-full h-full object-cover">
+                                <img src="{{ upload_asset($photo->path, 'galeri') }}"
+     alt="{{ $photo->description ?? 'Foto ' . $album->nama }}"
+     class="w-full h-full object-cover">
 
                                 {{-- Badge sampul --}}
                                 @if ($photo->is_cover)

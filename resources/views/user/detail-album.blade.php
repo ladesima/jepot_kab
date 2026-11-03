@@ -82,9 +82,12 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 @forelse ($album->photos as $photo)
                     <div class="group relative overflow-hidden rounded-lg shadow-md cursor-pointer aspect-square">
-                        <img src="{{ asset('storage/' . $photo->path) }}"
-                            alt="{{ $photo->description ?? 'Foto dari galeri ' . $album->nama }}"
-                            class="h-full w-full object-cover transform transition-transform duration-300 group-hover:scale-110 gallery-image">
+                        <img 
+    src="{{ $photo->path 
+        ? upload_asset($photo->path, 'galeri') 
+        : asset('images/no-image.png') }}"
+    alt="{{ $photo->description ?? 'Foto dari galeri ' . $album->nama }}"
+    class="h-full w-full object-cover transform transition-transform duration-300 group-hover:scale-110 gallery-image">
                         <div
                             class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <i class="fas fa-search-plus text-white text-3xl"></i>

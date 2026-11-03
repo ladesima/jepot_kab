@@ -16,17 +16,18 @@ class ArtikelUserController extends Controller
         return view('user.artikel', ['artikels' => $artikels]);
     }
 
-    public function show(Artikel $artikel)
-    {
-        // Ambil 5 artikel terbaru selain yang sedang dibuka
-        $artikelTerbaru = Artikel::latest('tanggal')
-            ->where('id', '!=', $artikel->id) // <-- Jangan tampilkan artikel yang sama
-            ->take(5)
-            ->get();
+   public function show(Artikel $artikel)
+{
+    $artikel->increment('views');
 
-        return view('user.detail-artikel', [
-            'artikel' => $artikel,
-            'artikelTerbaru' => $artikelTerbaru,
-        ]);
-    }
+    $artikelTerbaru = Artikel::latest('tanggal')
+        ->where('id', '!=', $artikel->id)
+        ->take(5)
+        ->get();
+
+    return view('user.detail-artikel', [
+        'artikel' => $artikel,
+        'artikelTerbaru' => $artikelTerbaru,
+    ]);
+}
 }

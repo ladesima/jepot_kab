@@ -1,133 +1,186 @@
-<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Wakil Bupati - Kabupaten Jeneponto</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                font-family: 'Poppins', sans-serif;
-            }
-        }
-    </style>
-</head>
+@section('content')
 
-<body class="bg-gray-100 text-gray-800">
+<style>
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    @include('layouts.navbar')
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-    <main>
-        {{-- Breadcrumb --}}
-        <section class="bg-white py-4 border-b">
-            <div class="container mx-auto px-6 text-sm">
-                <a href="#" class="hover:underline text-blue-600">Pemerintahan</a>
-                <span class="mx-2 text-gray-500">/</span>
-                <a href="#" class="hover:underline text-blue-600">Kepala Daerah</a>
-                <span class="mx-2 text-gray-500">/</span>
-                <span class="text-gray-700">Wakil Bupati</span>
-            </div>
-        </section>
+.reveal.delay-1 { transition-delay: 0.1s; }
+.reveal.delay-2 { transition-delay: 0.2s; }
+.reveal.delay-3 { transition-delay: 0.3s; }
+.reveal.delay-4 { transition-delay: 0.4s; }
 
-        {{-- Konten Utama --}}
-        <section class="container mx-auto px-6 py-12 md:py-16">
-            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg">
-                <div class="flex flex-col md:flex-row md:space-x-12">
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    background: linear-gradient(to bottom, #2563eb, #60a5fa);
+}
+</style>
 
-                    {{-- KOLOM KIRI: FOTO & IDENTITAS --}}
-                    <div class="w-full md:w-1/3 lg:w-1/4 flex-shrink-0 text-center mb-8 md:mb-0">
-                        <img src="{{ $wakilBupati->foto ? asset('storage/' . $wakilBupati->foto) : 'https://placehold.co/400x500/E2E8F0/334155?text=Foto+Wakil+Bupati' }}"
-                            alt="Foto {{ $wakilBupati->nama }}"
-                            class="rounded-lg shadow-md mx-auto w-64 h-80 object-cover">
-                        <div class="mt-6">
-                            <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">{{ $wakilBupati->nama }}</h1>
-                            <p class="text-blue-600 font-semibold text-lg mt-1">{{ $wakilBupati->jabatan }}</p>
+<main class="bg-gradient-to-b from-slate-50 via-white to-slate-100 min-h-screen">
+
+    {{-- HERO --}}
+    <section class="pt-28 pb-20 text-center reveal">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h1 class="text-5xl font-extrabold text-slate-800 tracking-tight">
+                Profil Wakil Bupati
+            </h1>
+            <p class="mt-4 text-gray-500 text-lg">
+                Kabupaten Jeneponto • Periode 2025 – 2030
+            </p>
+        </div>
+    </section>
+
+    {{-- PROFILE CARD --}}
+    <section class="container mx-auto px-6 pb-24">
+        <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl p-14 reveal">
+
+            {{-- MIRROR LAYOUT (INFO KIRI, FOTO KANAN) --}}
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+                {{-- INFORMASI --}}
+                <div class="reveal delay-1">
+
+                    <h2 class="text-3xl font-bold text-slate-800">
+                        {{ $wakilBupati->nama }}
+                    </h2>
+
+                    <p class="text-blue-600 font-semibold mt-2 text-lg">
+                        {{ $wakilBupati->jabatan }}
+                    </p>
+
+                    <div class="mt-12 space-y-8">
+
+                        <div class="flex justify-between border-b pb-4">
+                            <span class="text-gray-500">Tempat / Tanggal Lahir</span>
+                            <span class="font-semibold text-slate-800 text-right">
+                                {{ $wakilBupati->tempat_lahir }},
+                                {{ \Carbon\Carbon::parse($wakilBupati->tanggal_lahir)->translatedFormat('d F Y') }}
+                            </span>
                         </div>
-                    </div>
 
-                    {{-- KOLOM KANAN: PROFIL LENGKAP (SESUAI GAMBAR REFERENSI) --}}
-                    <div class="w-full md:w-2/3 lg:w-3/4">
+                        <div class="flex justify-between border-b pb-4">
+                            <span class="text-gray-500">Agama</span>
+                            <span class="font-semibold text-slate-800">
+                                {{ $wakilBupati->agama }}
+                            </span>
+                        </div>
 
-                        <dl class="text-base">
+                        <div class="flex justify-between border-b pb-4">
+                            <span class="text-gray-500">Alamat</span>
+                            <span class="font-semibold text-slate-800 text-right">
+                                {{ $wakilBupati->alamat }}
+                            </span>
+                        </div>
 
-                            {{-- Baris Nama --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600">Nama</dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">: {{ $wakilBupati->nama }}</dd>
-                            </div>
+                        <div class="flex justify-between border-b pb-4">
+                            <span class="text-gray-500">Nama Istri</span>
+                            <span class="font-semibold text-slate-800">
+                                {{ $wakilBupati->nama_istri ?? '-' }}
+                            </span>
+                        </div>
 
-                            {{-- Baris Tempat/Tanggal Lahir --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3 border-t border-slate-100">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600">Tempat/Tanggal Lahir
-                                </dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">: {{ $wakilBupati->tempat_lahir }},
-                                    {{ \Carbon\Carbon::parse($wakilBupati->tanggal_lahir)->translatedFormat('d F Y') }}
-                                </dd>
-                            </div>
-
-                            {{-- Baris Agama --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3 border-t border-slate-100">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600">Agama</dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">: {{ $wakilBupati->agama }}</dd>
-                            </div>
-
-                            {{-- Baris Jabatan --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3 border-t border-slate-100">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600">Jabatan</dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">: {{ $wakilBupati->jabatan }}
-                                    Periode 2025 - 2030</dd>
-                            </div>
-
-                            {{-- Baris Alamat --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3 border-t border-slate-100">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600">Alamat</dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">: {{ $wakilBupati->alamat }}</dd>
-                            </div>
-
-                            {{-- Baris Nama Suami --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3 border-t border-slate-100">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600">Nama istri</dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">:
-                                    {{ $wakilBupati->nama_istri ?? '-' }}</dd>
-                            </div>
-
-                            {{-- Baris Anak --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3 border-t border-slate-100">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600">Anak</dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">: {{ $wakilBupati->anak ?? '-' }}
-                                </dd>
-                            </div>
-
-                            {{-- Baris Riwayat Jabatan --}}
-                            <div class="grid grid-cols-12 gap-x-4 py-3 border-t border-slate-100">
-                                <dt class="col-span-4 md:col-span-3 font-semibold text-slate-600 self-start">Riwayat
-                                    Jabatan</dt>
-                                <dd class="col-span-8 md:col-span-9 text-slate-800">
-                                    {{-- Menggunakan Ordered List (<ol>) untuk penomoran otomatis --}}
-                                    <ol class="list-outside list-[decimal] space-y-1">
-                                        {{-- Data placeholder, idealnya dari database --}}
-                                        <li>Anggota DPRD Kabupaten Jeneponto (2014 - 2019)</li>
-                                        <li>Ketua Komisi IV DPRD Jeneponto (2019 - 2024)</li>
-                                        <li>Wakil Bupati Jeneponto (2025 - Sekarang)</li>
-                                    </ol>
-                                </dd>
-                            </div>
-                        </dl>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Jumlah Anak</span>
+                            <span class="font-semibold text-slate-800">
+                                {{ $wakilBupati->anak ?? '-' }}
+                            </span>
+                        </div>
 
                     </div>
+
+                    @if(!empty($wakilBupati->file_lhkpn))
+                        <div class="mt-8 pt-6 border-t border-gray-100 flex items-center">
+                            <a href="{{ upload_asset($wakilBupati->file_lhkpn, 'lhkpn') }}" target="_blank" download
+                               class="inline-flex items-center gap-3 px-6 py-3.5 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold rounded-2xl shadow-lg shadow-red-500/25 transition duration-300 transform hover:-translate-y-0.5">
+                                <i class="fas fa-file-pdf text-xl"></i>
+                                <span>Unduh Dokumen LHKPN</span>
+                                <i class="fas fa-arrow-down text-sm opacity-80"></i>
+                            </a>
+                        </div>
+                    @endif
 
                 </div>
-            </div>
-        </section>
-    </main>
 
-    @include('layouts.footer')
+                {{-- FOTO --}}
+                <div class="relative flex justify-center reveal delay-2">
+                    <div class="absolute w-80 h-80 bg-blue-500/20 blur-3xl rounded-full -z-10"></div>
+
+                    <img src="{{ upload_asset($wakilBupati->foto, 'kepala-daerah') }}"
+                        class="rounded-3xl shadow-2xl w-80 h-[500px] object-cover transition duration-500 hover:scale-105">
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- TIMELINE --}}
+        <div class="mt-32 text-center reveal">
+            <h3 class="text-3xl font-bold text-slate-800">
+                Riwayat Jabatan
+            </h3>
+        </div>
+
+        <div class="mt-20 max-w-4xl mx-auto relative">
+
+            <div class="timeline-line h-full"></div>
+
+            <div class="space-y-20 relative">
+
+                {{-- ITEM 1 --}}
+                <div class="relative flex justify-start reveal delay-1">
+                    <div class="w-1/2 pr-10 text-right">
+                        <p class="font-semibold text-slate-800 text-lg">
+                            Anggota DPRD Jeneponto
+                        </p>
+                        <p class="text-sm text-gray-500 mt-1">
+                            2019 – 2024
+                        </p>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-600 rounded-full shadow-lg"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+@endsection
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    reveals.forEach(reveal => {
+        observer.observe(reveal);
+    });
+
+});
+</script>
+
 
 
     <script>

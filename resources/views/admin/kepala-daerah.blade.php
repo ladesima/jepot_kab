@@ -60,7 +60,7 @@
                                     </a>
                                 </div>
                                 <div class="flex items-center space-x-4">
-                                    <img src="{{ $d->foto ? asset('storage/' . $d->foto) : asset('images/default.jpg') }}"
+                                    <img src="{{ $d->foto ? upload_asset($d->foto, 'kepala-daerah') : asset('images/default.jpg') }}"
                                         alt="Foto {{ $d->nama }}"
                                         class="w-24 h-32 object-cover rounded-md flex-shrink-0">
 
@@ -70,8 +70,17 @@
                                                 class="fas fa-map-marker-alt w-4 mr-1 text-gray-400"></i>
                                             Jeneponto</p>
                                         <p class="text-sm"><i class="fas fa-user-shield w-4 mr-1 text-gray-400"></i>
-                                            Kepala
-                                            Daerah</p>
+                                            Kepala Daerah</p>
+                                        @if(!empty($d->file_lhkpn))
+                                            <a href="{{ upload_asset($d->file_lhkpn, 'lhkpn') }}" target="_blank"
+                                               class="inline-flex items-center text-xs mt-2 text-emerald-600 hover:text-emerald-800 font-medium bg-emerald-50 px-2 py-1 rounded">
+                                                <i class="fas fa-file-pdf mr-1 text-red-500"></i> LHKPN Terunggah
+                                            </a>
+                                        @else
+                                            <span class="inline-flex items-center text-xs mt-2 text-gray-400 bg-gray-50 px-2 py-1 rounded">
+                                                <i class="fas fa-file-pdf mr-1 text-gray-300"></i> LHKPN Belum Ada
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

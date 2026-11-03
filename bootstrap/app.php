@@ -1,5 +1,10 @@
 <?php
 
+// Load custom helpers jika ada
+if (file_exists(__DIR__ . '/../app/helpers.php')) {
+    require_once __DIR__ . '/../app/helpers.php';
+}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,7 +16,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->trustProxies(at: '*');
+        $middleware->web(append: [
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \App\Http\Middleware\VisitorCounter::class,
+    ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -41,8 +41,16 @@ class PejabatDaerahController extends Controller
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        if($request->hasFile('foto')){
-            $validated['foto'] = $request->file('foto')->store('pejabat', 'public');
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $ext = strtolower($file->getClientOriginalExtension());
+            $filename = time() . '_' . \Illuminate\Support\Str::random(12) . '.' . $ext;
+            $dest = public_path('uploads/pejabat');
+            if (!file_exists($dest)) {
+                mkdir($dest, 0755, true);
+            }
+            $file->move($dest, $filename);
+            $validated['foto'] = $filename;
         }
 
         PejabatDaerah::create($validated);
@@ -89,8 +97,24 @@ class PejabatDaerahController extends Controller
 
         // Kalau ada upload foto
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('pejabat-daerah', 'public');
-            $pejabatDaerah->foto = $fotoPath;
+            $file = $request->file('foto');
+            $ext = strtolower($file->getClientOriginalExtension());
+            $filename = time() . '_' . \Illuminate\Support\Str::random(12) . '.' . $ext;
+            $dest = public_path('uploads/pejabat');
+            if (!file_exists($dest)) {
+                mkdir($dest, 0755, true);
+            }
+
+            if ($pejabatDaerah->foto) {
+                $oldFileName = basename($pejabatDaerah->foto);
+                $oldFile = public_path('uploads/pejabat/' . $oldFileName);
+                if (file_exists($oldFile) && is_file($oldFile)) {
+                    @unlink($oldFile);
+                }
+            }
+
+            $file->move($dest, $filename);
+            $pejabatDaerah->foto = $filename;
         }
 
         $pejabatDaerah->update([
@@ -116,8 +140,15 @@ class PejabatDaerahController extends Controller
     $pejabat = PejabatDaerah::findOrFail($id);
 
     // Hapus foto jika ada
-    if ($pejabat->foto && \Storage::disk('public')->exists($pejabat->foto)) {
-        \Storage::disk('public')->delete($pejabat->foto);
+    if ($pejabat->foto) {
+        $filename = basename($pejabat->foto);
+        $filePath = public_path('uploads/pejabat/' . $filename);
+        if (file_exists($filePath) && is_file($filePath)) {
+            @unlink($filePath);
+        }
+        if (\Storage::disk('public')->exists($pejabat->foto)) {
+            \Storage::disk('public')->delete($pejabat->foto);
+        }
     }
 
     $pejabat->delete();

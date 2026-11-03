@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\KepalaDaerah;
+use Illuminate\Support\Facades\Storage;
 
 class KepalaDaerahController extends Controller
 {
@@ -42,22 +43,66 @@ class KepalaDaerahController extends Controller
             'nama_istri' => 'nullable|string|max:255',
             'anak' => 'nullable|string|max:255',
             'riwayat_jabatan' => 'nullable|string',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // jika ada foto
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'file_lhkpn' => 'nullable|mimes:pdf|max:10240', // Maksimal 10MB PDF
         ], [
             // Pesan error custom
             'nama.required' => 'Nama wajib diisi.',
             'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
             'tanggal_lahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
-            'foto.image' => 'File harus berupa gambar (jpg, jpeg, png).',
+            'foto.image' => 'File harus berupa gambar (jpg, jpeg, png, webp).',
             'foto.max' => 'Ukuran foto maksimal 2MB.',
+            'file_lhkpn.mimes' => 'Dokumen LHKPN harus berformat PDF.',
+            'file_lhkpn.max' => 'Ukuran dokumen LHKPN maksimal 10MB.',
         ]);
 
         $kepalaDaerah = KepalaDaerah::findOrFail($id);
 
-        // Kalau ada upload foto
+        // Upload Foto ke public/uploads/kepala-daerah
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('kepala-daerah', 'public');
-            $kepalaDaerah->foto = $fotoPath;
+            $file = $request->file('foto');
+            $ext = strtolower($file->getClientOriginalExtension());
+            $filename = time() . '_' . \Illuminate\Support\Str::random(12) . '.' . $ext;
+            $destinationPath = public_path('uploads/kepala-daerah');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Hapus foto lama jika ada
+            if ($kepalaDaerah->foto) {
+                $oldFileName = basename($kepalaDaerah->foto);
+                $oldFile = public_path('uploads/kepala-daerah/' . $oldFileName);
+                if (file_exists($oldFile) && is_file($oldFile)) {
+                    @unlink($oldFile);
+                }
+            }
+
+            $file->move($destinationPath, $filename);
+            $kepalaDaerah->foto = $filename;
+        }
+
+        // Upload Dokumen LHKPN (PDF) ke public/uploads/lhkpn
+        if ($request->hasFile('file_lhkpn')) {
+            $file = $request->file('file_lhkpn');
+            $filename = time() . '_lhkpn_' . \Illuminate\Support\Str::random(12) . '.pdf';
+            $destinationPath = public_path('uploads/lhkpn');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Hapus file LHKPN lama jika ada
+            if ($kepalaDaerah->file_lhkpn) {
+                $oldFileName = basename($kepalaDaerah->file_lhkpn);
+                $oldFile = public_path('uploads/lhkpn/' . $oldFileName);
+                if (file_exists($oldFile) && is_file($oldFile)) {
+                    @unlink($oldFile);
+                }
+            }
+
+            $file->move($destinationPath, $filename);
+            $kepalaDaerah->file_lhkpn = $filename;
         }
 
         $kepalaDaerah->update([

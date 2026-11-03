@@ -23,40 +23,58 @@
             background-color: #4a5568;
             border-radius: 10px;
         }
+
+        /* Style untuk menampilkan label data pada tampilan mobile */
+        @media (max-width: 767px) {
+            .mobile-label::before {
+                content: attr(data-label);
+                font-weight: 600;
+                float: left;
+                color: #4A5568;
+                /* Warna abu-abu tua untuk label */
+            }
+        }
     </style>
 </head>
 
 <body class="bg-gray-100">
 
-    <div class="flex h-screen bg-gray-800 text-white">
+    <div class="flex h-screen bg-gray-200">
         @include('layouts.aside')
+
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header class="bg-white shadow-md p-4 flex justify-between items-center">
-                <button id="menu-toggle" class="md:hidden text-gray-600">
+            <header class="bg-white shadow-md p-4 flex justify-between items-center z-10">
+                <button id="menu-toggle" class="md:hidden text-gray-600" aria-label="Buka Menu">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
-                <h2 class="text-2xl font-bold text-gray-800">Profil Pejabat Daerah</h2>
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Profil Pejabat Daerah</h2>
                 <div class="flex items-center space-x-4">
-                    <span class="text-gray-600">Admin</span>
+                    <span class="hidden sm:inline text-gray-600">Admin</span>
                     <img class="h-10 w-10 rounded-full object-cover"
                         src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin123" alt="Admin Avatar">
-
                 </div>
             </header>
 
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 sm:p-6">
                 <div class="container mx-auto">
-                    <div class="mb-6 text-right">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
+                        <h3 class="text-gray-700 text-xl sm:text-2xl font-semibold">Daftar Pejabat</h3>
                         <a href="{{ route('admin.tambah-pejabat-daerah') }}"
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors inline-block">
-                            <i class="fas fa-plus mr-2"></i>Tambah Pejabat
+                            class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-plus"></i>Tambah Pejabat
                         </a>
-
                     </div>
 
-                    <div class="bg-white shadow-md rounded-lg overflow-x-auto">
+                    @if (session('success'))
+                        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md mb-4"
+                            role="alert">
+                            <p>{{ session('success') }}</p>
+                        </div>
+                    @endif
+
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
                         <table class="min-w-full leading-normal">
-                            <thead class="bg-gray-200 text-gray-600 uppercase text-sm">
+                            <thead class="hidden md:table-header-group bg-gray-200 text-gray-600 uppercase text-sm">
                                 <tr>
                                     <th class="py-3 px-5 text-left">Foto</th>
                                     <th class="py-3 px-5 text-left">Nama Pejabat</th>
@@ -65,67 +83,96 @@
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
-                                @foreach ($data as $d)
-                                    <tr>
-                                        <td class="py-3 px-5 border-b border-gray-200">
+                                @forelse ($data as $d)
+                                    <tr
+                                        class="block md:table-row mb-4 md:mb-0 border md:border-b-gray-200 rounded-lg md:border-none md:rounded-none">
+                                        <td data-label="Foto"
+                                            class="mobile-label block md:table-cell p-3 md:p-5 text-right md:text-left border-b md:border-none flex justify-end md:justify-start items-center">
                                             @if ($d->foto)
-                                                <img src="{{ asset('storage/' . $d->foto) }}"
+                                                <img src="{{ upload_asset($d->foto, 'pejabat') }}"
                                                     alt="Foto {{ $d->nama }}"
-                                                    class="h-12 w-12 object-cover rounded-full">
+                                                    class="h-16 w-16 object-cover rounded-full shadow-sm">
                                             @else
                                                 <img src="https://placehold.co/100x100" alt="Foto Default"
-                                                    class="h-12 w-12 object-cover rounded-full">
+                                                    class="h-16 w-16 object-cover rounded-full shadow-sm">
                                             @endif
                                         </td>
-                                        <td class="py-3 px-5 border-b border-gray-200">
-                                            <p class="font-semibold">{{ $d->nama }}</p>
+                                        <td data-label="Nama"
+                                            class="mobile-label block md:table-cell py-3 px-5 text-right md:text-left border-b md:border-none">
+                                            <p class="font-semibold text-base">{{ $d->nama }}</p>
                                         </td>
-                                        <td class="py-3 px-5 border-b border-gray-200">
+                                        <td data-label="Jabatan"
+                                            class="mobile-label block md:table-cell py-3 px-5 text-right md:text-left border-b md:border-none">
                                             <span
-                                                class="bg-purple-200 text-purple-700 py-1 px-3 rounded-full text-xs">{{ $d->jabatan }}</span>
+                                                class="bg-purple-200 text-purple-700 py-1 px-3 rounded-full text-xs font-medium">{{ $d->jabatan }}</span>
                                         </td>
-                                        <td class="py-3 px-5 border-b border-gray-200 text-center">
+                                        <td data-label="Aksi"
+                                            class="mobile-label block md:table-cell py-3 px-5 text-right md:text-center">
                                             <a href="{{ route('admin.edit-pejabat-daerah', $d->id) }}"
-                                                class="text-yellow-500 hover:text-yellow-700 mr-4" title="Edit">
+                                                class="text-yellow-500 hover:text-yellow-700 text-xl mr-4"
+                                                title="Edit">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-
                                             <form action="{{ route('admin.pejabat-daerah-destroy', $d->id) }}"
-                                                method="POST"
-                                                onsubmit="return confirm('Yakin ingin menghapus data ini?')"
-                                                style="display:inline;">
+                                                method="POST" class="inline-block"
+                                                onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-red-500 hover:text-red-700"
+                                                <button type="submit" class="text-red-500 hover:text-red-700 text-xl"
                                                     title="Hapus">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
-
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center py-10">
+                                            <p class="text-gray-500">Belum ada data pejabat.</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
             </main>
         </div>
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30 md:hidden"></div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.getElementById('menu-toggle');
-            const sidebar = document.getElementById('sidebar');
+            const sidebar = document.getElementById(
+            'sidebar'); // Pastikan elemen dengan ID 'sidebar' ada di layouts.aside
+            const overlay = document.getElementById('sidebar-overlay');
+            const closeSidebar = document.getElementById(
+            'close-sidebar'); // Pastikan elemen ini ada di layouts.aside
 
-            if (menuToggle && sidebar) {
-                menuToggle.addEventListener('click', function() {
+            function toggleSidebar() {
+                if (sidebar) {
                     sidebar.classList.toggle('-translate-x-full');
+                }
+                if (overlay) {
+                    overlay.classList.toggle('hidden');
+                }
+            }
+
+            if (menuToggle) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleSidebar();
                 });
+            }
+            if (overlay) {
+                overlay.addEventListener('click', toggleSidebar);
+            }
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', toggleSidebar);
             }
         });
     </script>
-
 </body>
 
 </html>

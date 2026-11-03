@@ -79,6 +79,7 @@
                                     <th class="py-3 px-5 text-left">Judul Berita</th>
                                     <th class="py-3 px-5 text-left">Kategori</th>
                                     <th class="py-3 px-5 text-left">Tanggal</th>
+                                    <th class="py-3 px-5 text-center">Views</th>
                                     <th class="py-3 px-5 text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -87,8 +88,9 @@
                                     <tr class="hover:bg-gray-50 transition-colors duration-200">
                                         <td class="py-4 px-5 text-center">{{ $loop->iteration }}</td>
                                         <td class="py-4 px-5">
-                                            <img src="{{ $d->foto ? asset('storage/' . $d->foto) : asset('images/default.jpg') }}"
-                                                alt="Gambar Berita" class="h-12 w-20 object-cover rounded-md">
+                                            <img src="{{ $d->foto ? upload_asset($d->foto, 'berita') : asset('images/default.jpg') }}"
+     alt="Gambar Berita"
+     class="h-12 w-20 object-cover rounded-md">
                                         </td>
                                         <td class="py-4 px-5 font-medium">{{ $d->judul }}</td>
                                         <td class="py-4 px-5">
@@ -136,15 +138,23 @@
         </div>
     </div>
 
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30 md:hidden">
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.getElementById('menu-toggle');
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
+            const closeSidebar = document.getElementById('close-sidebar');
 
             function toggleSidebar() {
-                sidebar.classList.toggle('-translate-x-full');
-                overlay.classList.toggle('hidden');
+                // [IMPROVEMENT] Check if elements exist before using them
+                if (sidebar && overlay) {
+                    sidebar.classList.toggle('-translate-x-full');
+                    overlay.classList.toggle('hidden');
+                }
             }
 
             if (menuToggle) {
@@ -153,10 +163,13 @@
                     toggleSidebar();
                 });
             }
+
             if (overlay) {
-                overlay.addEventListener('click', function() {
-                    toggleSidebar();
-                });
+                overlay.addEventListener('click', toggleSidebar);
+            }
+
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', toggleSidebar);
             }
         });
     </script>

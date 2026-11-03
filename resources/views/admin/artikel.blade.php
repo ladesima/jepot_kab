@@ -71,7 +71,7 @@
                                     <tr>
                                         <td class="py-3 px-5 border-b border-gray-200">{{ $loop->iteration }}</td>
                                         <td class="py-3 px-5 border-b border-gray-200">
-                                            <img src="{{ asset('storage/' . $d->gambar) }}" alt="Gambar Artikel"
+                                            <img src="{{ upload_asset($d->gambar, 'artikel') }}" alt="Gambar Artikel"
                                                 class="h-12 w-20 object-cover rounded">
                                         </td>
                                         <td class="py-3 px-5 border-b border-gray-200">
@@ -107,15 +107,38 @@
         </div>
     </div>
 
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30 md:hidden">
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.getElementById('menu-toggle');
             const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const closeSidebar = document.getElementById('close-sidebar');
 
-            if (menuToggle && sidebar) {
-                menuToggle.addEventListener('click', function() {
+            function toggleSidebar() {
+                // [IMPROVEMENT] Check if elements exist before using them
+                if (sidebar && overlay) {
                     sidebar.classList.toggle('-translate-x-full');
+                    overlay.classList.toggle('hidden');
+                }
+            }
+
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleSidebar();
                 });
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', toggleSidebar);
+            }
+
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', toggleSidebar);
             }
         });
     </script>

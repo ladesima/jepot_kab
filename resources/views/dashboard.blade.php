@@ -7,12 +7,20 @@
     <title>Diskominfo Jeneponto</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/theme-dark-light.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/interactive-animations.css') }}">
+    <script src="{{ asset('js/interactive-animations.js') }}" defer></script>
 
     <style type="text/tailwindcss">
         @layer base {
@@ -37,6 +45,40 @@
             animation: fadeInUp 0.8s ease-out forwards;
         }
     </style>
+    <style>
+/* ========================= */
+/* SMOOTH SCROLL REVEAL     */
+/* ========================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s cubic-bezier(0.16,1,0.3,1),
+                transform 1s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+<style>
+/* =============================== */
+/* PER-CARD SMOOTH REVEAL SYSTEM  */
+/* =============================== */
+
+.reveal-card {
+    opacity: 0;
+    transform: translateY(60px) scale(0.96);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal-card.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+</style>
 </head>
 
 <body class="bg-gray-50 text-gray-800">
@@ -45,124 +87,221 @@
 
     <main>
         <section class="py-12 md:py-20 bg-gray-100">
-            <div class="container mx-auto px-6">
+           <div class="container mx-auto px-6">
 
-                <div class="swiper hero-slider relative rounded-xl shadow-lg overflow-hidden">
-                    <div class="swiper-wrapper">
+    <div class="swiper hero-slider relative rounded-xl shadow-lg overflow-hidden">
+        <div class="swiper-wrapper">
+            @foreach ($sliders as $slider)
+               <div class="swiper-slide">
+    <div
+        class="relative min-h-[70vh] bg-cover bg-center text-white
+               flex items-center justify-start"
+        style="background-image: url('{{ upload_asset($slider->image_path, 'slider') }}')"
 
-                        <div class="swiper-slide">
-                            <div class="relative min-h-[70vh] bg-cover bg-center text-white flex items-center justify-center text-center"
-                                style="background-image: url('{{ asset('images/banner1.png') }}')">
-                                <div class="absolute inset-0 bg-black/60"></div>
-                                <div class="container mx-auto px-6 relative z-10">
-                                    <div class="max-w-3xl mx-auto">
-                                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Budidaya Tambak
-                                            Garam</h1>
-                                        <p class="mt-4 text-lg md:text-xl font-light">"Ingat garam, ingat Jeneponto".
-                                            Potensi besar dalam menunjang swasembada garam.</p>
-                                        <a href="#berita"
-                                            class="mt-8 inline-block px-10 py-3 bg-blue-600 hover:bg-blue-700 rounded-md font-bold transition-all duration-300">
-                                            Read More
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- overlay -->
+        <div class="absolute inset-0 bg-black/45"></div>
 
-                        <div class="swiper-slide">
-                            <div class="relative min-h-[70vh] bg-cover bg-center text-white flex items-center justify-center text-center"
-                                style="background-image: url({{ asset('images/banner2.png') }})">
-                                <div class="absolute inset-0 bg-black/60"></div>
-                                <div class="container mx-auto px-6 relative z-10">
-                                    <div class="max-w-3xl mx-auto">
-                                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Inovasi Teknologi
-                                            Pertanian</h1>
-                                        <p class="mt-4 text-lg md:text-xl font-light">Menerapkan teknologi modern untuk
-                                            hasil panen yang lebih berkualitas.</p>
-                                        <a href="#galeri"
-                                            class="mt-8 inline-block px-10 py-3 bg-green-600 hover:bg-green-700 rounded-md font-bold transition-all duration-300">
-                                            Lihat Galeri
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- konten -->
+        <div class="relative z-10 w-full">
+            <div class="container mx-auto px-12">
+                <div class="max-w-lg text-left">
 
-                        <div class="swiper-slide">
-                            <div class="relative min-h-[70vh] bg-cover bg-center text-white flex items-center justify-center text-center"
-                                style="background-image: url({{ asset('images/banner3.png') }})">
-                                <div class="absolute inset-0 bg-black/60"></div>
-                                <div class="container mx-auto px-6 relative z-10">
-                                    <div class="max-w-3xl mx-auto">
-                                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Potensi Ekonomi
-                                            Lokal</h1>
-                                        <p class="mt-4 text-lg md:text-xl font-light">Mendorong kesejahteraan masyarakat
-                                            melalui sektor pergaraman.</p>
-                                        <a href="#"
-                                            class="mt-8 inline-block px-10 py-3 bg-yellow-500 hover:bg-yellow-600 rounded-md font-bold transition-all duration-300 text-gray-900">
-                                            Hubungi Kami
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <h1 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight">
+                        {{ $slider->title }}
+                    </h1>
 
-                    </div>
-                    <div class="swiper-button-next text-white"></div>
-                    <div class="swiper-button-prev text-white"></div>
-                    <div class="swiper-pagination"></div>
+
+                    <a href="{{ $slider->button_link }}"
+                       class="inline-flex items-center mt-7 px-7 py-3 rounded-md
+                              {{ $slider->button_color_class }}
+                              bg-opacity-70 hover:bg-opacity-100
+                              backdrop-blur-sm
+                              font-semibold transition-all duration-300">
+                        {{ $slider->button_text }}
+                    </a>
+
                 </div>
-
             </div>
-        </section>
+        </div>
+
+    </div>
+</div>
+
+
+            @endforeach
+        </div>
+
+        <div class="swiper-button-next text-white"></div>
+        <div class="swiper-button-prev text-white"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+</div>
 
 
         <section class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
-                    <div class="group flex flex-col items-center">
-                        <div
-                            class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
-                            <i
-                                class="fa fa-info-circle text-4xl text-blue-600 group-hover:text-white transition-colors duration-300"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-700 text-lg">Layanan Publik</h3>
-                    </div>
-                    <div class="group flex flex-col items-center">
-                        <div
-                            class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
-                            <i
-                                class="fa fa-bullhorn text-4xl text-blue-600 group-hover:text-white transition-colors duration-300"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-700 text-lg">Pengumuman</h3>
-                    </div>
-                    <div class="group flex flex-col items-center">
-                        <div
-                            class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
-                            <i
-                                class="fa fa-newspaper text-4xl text-blue-600 group-hover:text-white transition-colors duration-300"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-700 text-lg">Berita Terkini</h3>
-                    </div>
-                    <div class="group flex flex-col items-center">
-                        <div
-                            class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
-                            <i
-                                class="fa fa-chart-bar text-4xl text-blue-600 group-hover:text-white transition-colors duration-300"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-700 text-lg">Data & Statistik</h3>
-                    </div>
-                    <div class="group flex flex-col items-center">
-                        <div
-                            class="bg-green-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-green-500 group-hover:scale-110">
-                            <i
-                                class="fa fa-check-circle text-4xl text-green-500 group-hover:text-white transition-colors duration-300"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-700 text-lg">Status Laporan</h3>
-                    </div>
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-4 md:grid-cols-7 gap-8 text-center">
+
+            <!-- Layanan Publik (sementara ke dashboard) -->
+            <a href="{{ route('dashboard') }}"
+               class="group flex flex-col items-center">
+                <div
+                    class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+                    <i class="fa fa-info-circle text-4xl text-blue-600 group-hover:text-white"></i>
                 </div>
-            </div>
-        </section>
+                <h3 class="font-semibold text-gray-700 text-lg">
+                    Layanan Publik
+                </h3>
+            </a>
+
+            <!-- Pengumuman (sementara ke berita) -->
+            <a href="{{ route('user.pengumuman') }}"
+               class="group flex flex-col items-center">
+                <div
+                    class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+                    <i class="fa fa-bullhorn text-4xl text-blue-600 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-semibold text-gray-700 text-lg">
+                    Pengumuman
+                </h3>
+            </a>
+
+            <!-- Berita -->
+            <a href="{{ route('user.berita') }}"
+               class="group flex flex-col items-center">
+                <div
+                    class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+                    <i class="fa fa-newspaper text-4xl text-blue-600 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-semibold text-gray-700 text-lg">
+                    Berita Terkini
+                </h3>
+            </a>
+
+            <!-- Statistik -->
+            <a href="{{ route('user.data-statistik') }}"
+               class="group flex flex-col items-center">
+                <div
+                    class="bg-blue-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+                    <i class="fa fa-chart-bar text-4xl text-blue-600 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-semibold text-gray-700 text-lg">
+                    Data & Statistik
+                </h3>
+            </a>
+
+            <!-- Status Laporan (Penghargaan) -->
+            <a href="{{ route('user.penghargaan') }}"
+               class="group flex flex-col items-center">
+                <div
+                    class="bg-green-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-green-500 group-hover:scale-110">
+                    <i class="fa fa-check-circle text-4xl text-green-500 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-semibold text-gray-700 text-lg">
+                    Status Laporan
+                </h3>
+            </a>
+                          <!-- IPKD -->
+<a href="{{ route('ipk') }}"
+class="group flex flex-col items-center">
+<div class="bg-orange-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-orange-500 group-hover:scale-110">
+<i class="fa fa-file-invoice text-4xl text-orange-500 group-hover:text-white"></i>
+</div>
+<h3 class="font-semibold text-gray-700 text-lg">
+Indeks Pengelolaan Keuangan Daerah (IPKD)
+</h3>
+</a>
+
+<!-- MCSP -->
+<a href="{{ route('mcsp') }}"
+class="group flex flex-col items-center">
+<div class="bg-red-100 rounded-full p-5 mb-4 transition-all duration-300 group-hover:bg-red-500 group-hover:scale-110">
+<i class="fa fa-shield-halved text-4xl text-red-500 group-hover:text-white"></i>
+</div>
+<h3 class="font-semibold text-gray-700 text-lg">
+MCSP-KOPSURGAH KPK
+</h3>
+</a>
+        </div>
+    </div>
+</section>
+<section id="portal-aplikasi" class="py-20 bg-gradient-to-b from-slate-500 to-slate-900">
+    <div class="container mx-auto px-6">
+
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-white">Portal Pemerintahan</h2>
+            <p class="text-lg text-white/80 mt-2">
+                Akses cepat ke seluruh aplikasi Kabupaten Jeneponto
+            </p>
+        </div>
+
+        @php
+        $apps = [
+            ['nama' => 'ppid', 'url' => 'https://ppid.jenepontokab.go.id'],
+            ['nama' => 'rsudlantodgpasewang', 'url' => 'https://rsudlantodgpasewang.jenepontokab.go.id'],
+            ['nama' => 'siga', 'url' => 'https://siga.jenepontokab.go.id'],
+            ['nama' => 'silopus', 'url' => 'https://silopus.jenepontokab.go.id'],
+            ['nama' => 'sipekerja', 'url' => 'https://sipekerja.jenepontokab.go.id'],
+            ['nama' => 'tatapemerintahan', 'url' => 'https://tatapemerintahan.jenepontokab.go.id'],
+            ['nama' => 'skuter', 'url' => 'https://skuter.jenepontokab.go.id'],
+            ['nama' => 'sitappa', 'url' => 'https://sitappa.jenepontokab.go.id'],
+            ['nama' => 'sirena', 'url' => 'https://sirena.jenepontokab.go.id'],
+            ['nama' => 'sipiara', 'url' => 'https://sipiara.jenepontokab.go.id'],
+            ['nama' => 'sipekerja-data', 'url' => 'https://sipekerja-data.jenepontokab.go.id'],
+            ['nama' => 'bappeda-monev', 'url' => 'https://bappeda-monev.jenepontokab.go.id'],
+            ['nama' => 'daengsuda', 'url' => 'https://daengsuda.jenepontokab.go.id'],
+            ['nama' => 'disdikbud', 'url' => 'https://disdikbud.jenepontokab.go.id'],
+            ['nama' => 'dispusip', 'url' => 'https://dispusip.jenepontokab.go.id'],
+            ['nama' => 'Dinas Kesehatan', 'url' => 'https://dinkesjenepontokab.org/'],
+        ];
+
+        function getIconClass($key){
+            $key = strtolower($key);
+
+            if(str_contains($key,'ppid')){
+                return 'fa-bullhorn';
+            }
+            elseif(str_contains($key,'rsud')){
+                return 'fa-hospital';
+            }
+            elseif(str_contains($key,'kesehatan') || str_contains($key,'dinkes')){
+                return 'fa-heartbeat';
+            }
+            elseif(str_contains($key,'dik') || str_contains($key,'pus')){
+                return 'fa-graduation-cap';
+            }
+            elseif(str_contains($key,'data') || str_contains($key,'monev') || str_contains($key,'rena') || str_contains($key,'appa')){
+                return 'fa-chart-line';
+            }
+            elseif(str_contains($key,'tata') || str_contains($key,'skuter') || str_contains($key,'sipiara') || str_contains($key,'daeng')){
+                return 'fa-building';
+            }
+
+            return 'fa-globe';
+        }
+        @endphp
+
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            @foreach($apps as $app)
+                <a href="{{ $app['url'] }}" target="_blank"
+                   class="group bg-white/10 backdrop-blur rounded-xl p-6 text-center text-white hover:bg-white/20 transition">
+
+                    <div class="mb-4">
+                        <i class="fa-solid {{ getIconClass($app['nama']) }} text-4xl"></i>
+                    </div>
+
+                    <p class="text-sm font-semibold break-all">
+                        {{ $app['nama'] }}
+                    </p>
+                </a>
+            @endforeach
+        </div>
+
+    </div>
+</section>
+
 
         <section id="berita" class="py-20 bg-gray-50">
             <div class="container mx-auto px-6">
@@ -176,8 +315,8 @@
                         <a href="{{ route('berita.show', $berita->id) }}"
                             class="group block bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
                             <div class="overflow-hidden rounded-t-xl h-56">
-                                <img src="{{ asset('storage/' . $berita->foto) }}" alt="{{ $berita->judul }}"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <img src="{{ upload_asset($berita->foto, 'berita') }}" 
+     class="w-full h-48 object-cover">
                             </div>
                             <div class="p-6">
                                 {{-- Kategori berita --}}
@@ -191,9 +330,18 @@
                                 </h3>
 
                                 {{-- Tanggal berita --}}
-                                <p class="text-gray-500 text-sm">
-                                    {{ \Carbon\Carbon::parse($berita->tanggal_kejadian)->translatedFormat('l, d F Y') }}
-                                </p>
+                                <div class="flex items-center justify-between mt-4 text-sm text-gray-500">
+
+    <span>
+        {{ \Carbon\Carbon::parse($berita->tanggal_kejadian)->translatedFormat('l, d F Y') }}
+    </span>
+
+    <span class="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-xs text-gray-600">
+        <i class="fas fa-eye text-gray-400"></i>
+        {{ number_format($berita->views) }}
+    </span>
+
+</div>
                             </div>
                         </a>
                     @endforeach
@@ -201,86 +349,129 @@
             </div>
         </section>
 
-        <section id="galeri" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-gray-800">Galeri Album</h2>
-                    <p class="text-lg text-gray-500 mt-2">Lihat dokumentasi kegiatan melalui album.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach ($albums as $album)
-                        <a href="{{ route('album.show', $album->id) }}"
-                            class="group relative rounded-xl shadow-lg overflow-hidden cursor-pointer">
-                            <img src="{{ $album->cover ? asset('storage/' . $album->cover->path) : 'https://via.placeholder.com/600x400.png?text=No+Cover' }}"
-                                alt="Thumbnail {{ $album->nama }}"
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div
-                                class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center">
-                                <i
-                                    class="fas fa-images text-7xl text-white/80 transform group-hover:scale-110 transition-transform duration-300"></i>
-                            </div>
-                            <div class="absolute bottom-0 left-0 p-4">
-                                <h3 class="text-white font-bold text-lg">{{ $album->nama }}</h3>
-                                <p class="text-white text-sm">{{ $album->photos->count() }} foto</p>
-                            </div>
-                        </a>
-                    @endforeach
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+    @foreach ($albums as $album)
+        <a href="{{ route('album.show', $album->id) }}"
+           class="group relative h-[380px] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+
+            {{-- IMAGE --}}
+            @php
+    $cover = $album->photos->first();
+@endphp
+
+@if($cover)
+    <img src="{{ upload_asset($cover->path, 'galeri') }}"
+         alt="{{ $album->nama }}"
+         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+@else
+    <img src="https://via.placeholder.com/600x400"
+         class="absolute inset-0 w-full h-full object-cover">
+@endif
+
+            {{-- OVERLAY --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" style="background-color: transparent !important;"></div>
+
+            {{-- ICON CENTER --}}
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="bg-white/20 backdrop-blur-md p-4 rounded-full opacity-80 group-hover:scale-110 transition">
+                    <i class="fas fa-images text-white text-2xl"></i>
                 </div>
             </div>
-        </section>
 
+            {{-- BOTTOM INFO --}}
+            <div class="absolute bottom-0 left-0 w-full p-6 text-white">
+
+                <h3 class="text-xl font-semibold mb-2 leading-snug">
+                    {{ $album->nama }}
+                </h3>
+
+                <div class="flex items-center justify-between text-sm text-white/90">
+
+                    <span>
+                        {{ $album->photos->count() }} foto
+                    </span>
+
+                    <span class="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-xs">
+                        <i class="fas fa-eye"></i>
+                        {{ number_format($album->views) }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+    @endforeach
+
+</div>
+
+        
     </main>
 
-    <footer class="bg-slate-900 text-gray-300 pt-16 pb-8">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div class="col-span-1 md:col-span-2 lg:col-span-1">
-                    <h3 class="text-xl font-bold text-white mb-4">Tentang Kami</h3>
-                    <p class="text-gray-400">Portal resmi informasi budidaya dan pengembangan sektor garam di Kabupaten
-                        Jeneponto.</p>
-                    <div class="flex space-x-4 mt-6">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
-                                class="fab fa-facebook-f fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
-                                class="fab fa-instagram fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
-                                class="fab fa-youtube fa-lg"></i></a>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Navigasi</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="hover:text-white transition-colors">Profil Daerah</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Semua Berita</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Galeri Lengkap</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Regulasi & Dokumen</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">PPID</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="hover:text-white transition-colors">Profil PPID</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Layanan Informasi</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Pengajuan Keberatan</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Kontak Kami</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start"><i class="fas fa-map-marker-alt mr-3 mt-1 text-white"></i>Jl.
-                            Poros, Jeneponto, Sulawesi Selatan</li>
-                        <li class="flex items-start"><i class="fas fa-phone mr-3 mt-1 text-white"></i>(0419) 123-456
-                        </li>
-                        <li class="flex items-start"><i
-                                class="fas fa-envelope mr-3 mt-1 text-white"></i>info@jeneponto.go.id</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-12 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-                <p>&copy; 2025 Hak Cipta Dilindungi. Pemerintah Kabupaten Jeneponto.</p>
-            </div>
-        </div>
-    </footer>
+    @include('layouts.footer')
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Target semua card yang ada
+    const cards = document.querySelectorAll(
+        "#portal-aplikasi a, " + 
+        "#berita a, " + 
+        "#galeri a, " +
+        "section.py-20.bg-white .grid a"
+    );
+
+    // Tambahkan class reveal-card otomatis
+    cards.forEach((card, index) => {
+        card.classList.add("reveal-card");
+        card.style.transitionDelay = (index % 5) * 0.1 + "s"; 
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    document.querySelectorAll(".reveal-card").forEach(card => {
+        observer.observe(card);
+    });
+
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Pilih section besar saja (tidak ganggu struktur)
+    const sections = document.querySelectorAll("main > section");
+
+    // Tambahkan class reveal otomatis
+    sections.forEach(section => {
+        section.classList.add("reveal");
+    });
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    reveals.forEach(reveal => {
+        observer.observe(reveal);
+    });
+
+});
+</script>
 
 
     <script>
@@ -380,6 +571,7 @@
             },
         });
     </script>
+
 
 </body>
 

@@ -83,7 +83,7 @@
                                 <div class="mt-2">
                                     <span class="block text-sm text-gray-500 mb-2">Gambar Saat Ini:</span>
                                     @if ($artikel->gambar)
-                                        <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="Gambar lama"
+                                        <img src="{{ upload_asset($artikel->gambar, 'artikel') }}" alt="Gambar lama"
                                             class="h-24 w-auto rounded-md object-cover mb-4">
                                     @else
                                         <span class="text-gray-500 italic">Tidak ada gambar.</span>

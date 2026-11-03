@@ -48,7 +48,7 @@
                                 {{-- Gambar --}}
                                 <div class="w-full md:w-1/3">
                                     <a href="{{ route('berita.show', $item->id) }}">
-                                        <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->judul }}"
+                                        <img src="{{ upload_asset($item->foto, 'berita') }}" alt="{{ $item->judul }}"
                                             class="w-full h-48 object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105">
                                     </a>
                                 </div>

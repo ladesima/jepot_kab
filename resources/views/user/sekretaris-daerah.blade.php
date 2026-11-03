@@ -1,324 +1,193 @@
-<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Sekretaris Daerah - Kabupaten Jeneponto</title>
+@section('content')
 
-    <script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Scroll Reveal Base */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+/* Delay Stagger */
+.reveal.delay-1 { transition-delay: 0.1s; }
+.reveal.delay-2 { transition-delay: 0.2s; }
+.reveal.delay-3 { transition-delay: 0.3s; }
+.reveal.delay-4 { transition-delay: 0.4s; }
 
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                font-family: 'Poppins', sans-serif;
-            }
-        }
-    </style>
-</head>
+/* Timeline Line */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    background: linear-gradient(to bottom, #0d9488, #2dd4bf);
+}
+</style>
 
-<body class="bg-gray-100 text-gray-800">
+<main class="bg-gradient-to-b from-slate-50 via-white to-slate-100 min-h-screen">
 
-    <header class="sticky top-0 z-50 shadow-md">
-        <div class="bg-slate-900 text-white text-xs">
-            <div class="container mx-auto px-6 py-1.5 flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-envelope"></i>
-                    <span>diskominfo@jenepontokab.go.id</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#" class="hover:text-blue-400 transition-colors"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-blue-400 transition-colors"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="hover:text-blue-400 transition-colors"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
+    {{-- HERO --}}
+    <section class="pt-28 pb-20 text-center reveal">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h1 class="text-5xl font-extrabold text-slate-800 tracking-tight">
+                Profil Sekretaris Daerah
+            </h1>
+            <p class="mt-4 text-gray-500 text-lg">
+                Pemerintah Kabupaten Jeneponto
+            </p>
         </div>
+    </section>
 
-        <nav class="bg-slate-800">
-            <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <div class="flex items-center">
-                    <img src="https://placehold.co/50x50/3B82F6/FFFFFF?text=LOGO" alt="Logo Kabupaten Jeneponto"
-                        class="h-14 w-14 mr-3">
-                    <div>
-                        <p class="text-white font-bold text-xl leading-tight">KABUPATEN</p>
-                        <p class="text-white font-bold text-xl leading-tight">JENEPONTO</p>
-                    </div>
+    {{-- PROFILE CARD --}}
+    <section class="container mx-auto px-6 pb-24">
+        <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl p-14 reveal">
+
+            @isset($sekda)
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+                {{-- FOTO --}}
+                <div class="relative flex justify-center reveal delay-1">
+                    <div class="absolute w-80 h-80 bg-teal-500/20 blur-3xl rounded-full -z-10"></div>
+
+                    <img src="{{ !empty($sekda->foto) ? asset('uploads/sekda/' . basename($sekda->foto)) : 'https://placehold.co/400x500/E2E8F0/334155?text=Foto+Sekda' }}"
+                        alt="Foto {{ $sekda->nama }}"
+                        class="rounded-3xl shadow-2xl w-80 h-[500px] object-cover transition duration-500 hover:scale-105">
                 </div>
 
-                <div class="hidden md:flex items-center space-x-2 text-white font-medium">
-                    <div class="relative">
-                        <button
-                            class="dropdown-toggle px-4 py-2 rounded-md hover:bg-slate-700 transition-colors flex items-center">
-                            Pemerintahan <i class="fas fa-chevron-down text-xs ml-2"></i>
-                        </button>
-                        <div
-                            class="dropdown-menu absolute right-0 mt-2 w-56 bg-slate-700 rounded-md shadow-lg py-1 z-20 hidden">
-                            <div class="relative group">
-                                <a href="#"
-                                    class="block w-full text-left px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors flex items-center justify-between">
-                                    Kepala Daerah
-                                    <i class="fas fa-chevron-right text-xs"></i>
-                                </a>
-                                <div
-                                    class="absolute left-full top-0 -mt-1 w-56 bg-slate-700 rounded-md shadow-lg py-1 z-30 hidden group-hover:block">
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Bupati</a>
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Wakil
-                                        Bupati</a>
-                                </div>
-                            </div>
-                            <div class="relative group">
-                                <a href="#"
-                                    class="block w-full text-left px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors flex items-center justify-between">
-                                    Pejabat Daerah
-                                    <i class="fas fa-chevron-right text-xs"></i>
-                                </a>
-                                <div
-                                    class="absolute left-full top-0 -mt-1 w-56 bg-slate-700 rounded-md shadow-lg py-1 z-30 hidden group-hover:block">
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Sekretaris
-                                        Daerah</a>
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Kepala
-                                        Dinas</a>
-                                </div>
-                            </div>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Visi
-                                dan Misi</a>
+                {{-- INFORMASI --}}
+                <div class="reveal delay-2">
+
+                    <h2 class="text-3xl font-bold text-slate-800">
+                        {{ $sekda->nama }}
+                    </h2>
+
+                    <p class="text-teal-600 font-semibold mt-2 text-lg">
+                        Sekretaris Daerah Kabupaten Jeneponto
+                    </p>
+
+                    <div class="mt-12 space-y-8">
+
+                        <div class="flex justify-between border-b pb-4">
+                            <span class="text-gray-500">Tempat / Tanggal Lahir</span>
+                            <span class="font-semibold text-slate-800 text-right">
+                                {{ $sekda->tempat_lahir ?? '-' }},
+                                {{ $sekda->tanggal_lahir ? \Carbon\Carbon::parse($sekda->tanggal_lahir)->translatedFormat('d F Y') : '-' }}
+                            </span>
                         </div>
-                    </div>
 
-                    <div class="relative">
-                        <button
-                            class="dropdown-toggle px-4 py-2 rounded-md hover:bg-slate-700 transition-colors flex items-center">
-                            Profil Daerah <i class="fas fa-chevron-down text-xs ml-2"></i>
-                        </button>
-                        <div
-                            class="dropdown-menu absolute right-0 mt-2 w-56 bg-slate-700 rounded-md shadow-lg py-1 z-20 hidden">
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Gambaran
-                                Umum</a>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Data
-                                Statistik</a>
+                        <div class="flex justify-between border-b pb-4">
+                            <span class="text-gray-500">Agama</span>
+                            <span class="font-semibold text-slate-800">
+                                {{ $sekda->agama ?? '-' }}
+                            </span>
                         </div>
-                    </div>
 
-                    <div class="relative">
-                        <button
-                            class="dropdown-toggle px-4 py-2 rounded-md hover:bg-slate-700 transition-colors flex items-center">
-                            Media Informasi <i class="fas fa-chevron-down text-xs ml-2"></i>
-                        </button>
-                        <div
-                            class="dropdown-menu absolute right-0 mt-2 w-56 bg-slate-700 rounded-md shadow-lg py-1 z-20 hidden">
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Berita</a>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-white hover:bg-slate-600 transition-colors">Galeri</a>
+                        <div class="flex justify-between border-b pb-4">
+                            <span class="text-gray-500">Jabatan</span>
+                            <span class="font-semibold text-slate-800 text-right">
+                                Sekretaris Daerah
+                            </span>
                         </div>
-                    </div>
 
-                    <a href="#" class="px-4 py-2 rounded-md hover:bg-slate-700 transition-colors">Penghargaan</a>
-                    <a href="#" class="px-4 py-2 rounded-md hover:bg-slate-700 transition-colors">Login</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section class="bg-gray-200 py-4">
-            <div class="container mx-auto px-6 text-sm">
-                <a href="#" class="hover:underline text-blue-600">Pemerintahan</a>
-                <span class="mx-2 text-gray-500">/</span>
-                <a href="#" class="hover:underline text-blue-600">Pejabat Daerah</a>
-                <span class="mx-2 text-gray-500">/</span>
-                <span class="text-gray-700">Sekretaris Daerah</span>
-            </div>
-        </section>
-
-        <section class="container mx-auto px-6 py-12 md:py-20">
-            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg">
-                <div class="flex flex-col md:flex-row md:space-x-12 items-center md:items-start">
-
-                    <div class="w-full md:w-1/3 flex-shrink-0 text-center mb-8 md:mb-0">
-                        <img src="https://placehold.co/400x500/E2E8F0/334155?text=Foto+Sekda"
-                            alt="Foto Sekretaris Daerah Jeneponto"
-                            class="rounded-lg shadow-md mx-auto w-64 h-80 object-cover">
-
-                        <div class="mt-6">
-                            <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">MUH. ARIFIN NUR, SH, MH</h1>
-                            <p class="text-blue-600 font-semibold text-lg mt-1">Sekretaris Daerah Jeneponto</p>
-                            <p class="text-sm text-gray-500">(Periode 2022 - Sekarang)</p>
-                        </div>
-                    </div>
-
-                    <div class="w-full md:w-2/3">
-                        <div class="mb-10">
-                            <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-blue-500 pb-2 mb-4">Data
-                                Pribadi</h2>
-                            <div class="space-y-3 text-gray-700">
-                                <p><strong>Tempat / Tgl Lahir:</strong> JENEPONTO, 24 APRIL 1966</p>
-                                <p><strong>Agama:</strong> Islam</p>
-                                <p><strong>Alamat:</strong> Jalan Cempaka No. 5, Kel. Empoang, Kec. Binamu, Jeneponto
-                                </p>
-                                <p><strong>Nama Istri:</strong> Hj. ST. FARIANI ARIFIN</p>
-                                <p><strong>Anak:</strong> ST. ALVIANI ARIFIN</p>
+                        @if(!empty($sekda->sambutan))
+                        <div class="border-b pb-4">
+                            <span class="text-gray-500 block mb-2">Sambutan</span>
+                            <div class="text-slate-700 text-sm leading-relaxed italic">
+                                "{!! nl2br(e($sekda->sambutan)) !!}"
                             </div>
                         </div>
+                        @endif
 
-                        <div>
-                            <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-blue-500 pb-2 mb-4">Riwayat
-                                Jabatan</h2>
-                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
-                                <li>Kepala Sub Bagian Peraturan Perundang - Undangan, Bagian Hukum SETWINDA (1994)</li>
-                                <li>Kepala Seksi Subsidi dan Bantuan, Dinas P dan K (1999)</li>
-                                <li>Pymt. Kepala Bagian Persidangan & Risalah, Sekretariat DPRD (2001)</li>
-                                <li>Kepala Bagian Umum dan Perlengkapan, Setda Kab. Jeneponto (2004)</li>
-                                <li>Kepala Bagian Keuangan, Setda Kab. Keuangan (2009)</li>
-                                <li>Staf Ahli Bidang Sumber Daya Manusia dan Kesejahteraan Masyarakat (2010)</li>
-                                <li>Asisten Administrasi Umum (2010)</li>
-                                <li>Kepala Badan Kepegawaian dan Pengembangan Sumber Daya Manusia (2017)</li>
-                                <li>Kepala Dinas Pekerjaan Umum dan Penataan Ruang (2019)</li>
-                                <li>Sekretaris Daerah Kab. Jeneponto (2022 - Sekarang)</li>
-                            </ul>
-                        </div>
+                    </div>
 
-                        <div class="mt-8">
-                            <a href="#"
-                                class="inline-block px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg transform hover:scale-105">
-                                <i class="fas fa-download mr-2"></i>Unduh LHKPN
+                    @if(!empty($sekda->file_lhkpn))
+                        <div class="mt-8 pt-6 border-t border-gray-100 flex items-center">
+                            <a href="{{ asset('uploads/lhkpn/' . basename($sekda->file_lhkpn)) }}" target="_blank" download
+                               class="inline-flex items-center gap-3 px-6 py-3.5 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold rounded-2xl shadow-lg shadow-red-500/25 transition duration-300 transform hover:-translate-y-0.5">
+                                <i class="fas fa-file-pdf text-xl"></i>
+                                <span>Unduh Dokumen LHKPN</span>
+                                <i class="fas fa-arrow-down text-sm opacity-80"></i>
                             </a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+                    @endif
 
-    <footer class="bg-slate-900 text-gray-300 pt-16 pb-8">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div class="col-span-1 md:col-span-2 lg:col-span-1">
-                    <h3 class="text-xl font-bold text-white mb-4">Tentang Kami</h3>
-                    <p class="text-gray-400">Portal resmi informasi Pemerintah Kabupaten Jeneponto.</p>
-                    <div class="flex space-x-4 mt-6">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
-                                class="fab fa-facebook-f fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
-                                class="fab fa-instagram fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
-                                class="fab fa-youtube fa-lg"></i></a>
-                    </div>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Navigasi</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="hover:text-white transition-colors">Profil Daerah</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Semua Berita</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Galeri Lengkap</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Regulasi & Dokumen</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">PPID</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="hover:text-white transition-colors">Profil PPID</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Layanan Informasi</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Pengajuan Keberatan</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Kontak Kami</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start"><i class="fas fa-map-marker-alt mr-3 mt-1 text-white"></i>Jl.
-                            Poros, Jeneponto, Sulawesi Selatan</li>
-                        <li class="flex items-start"><i class="fas fa-phone mr-3 mt-1 text-white"></i>(0419) 123-456
-                        </li>
-                        <li class="flex items-start"><i
-                                class="fas fa-envelope mr-3 mt-1 text-white"></i>info@jeneponto.go.id</li>
-                    </ul>
+
+            </div>
+
+            {{-- RIWAYAT JABATAN --}}
+            @if(!empty($sekda->riwayat_jabatan))
+            <div class="mt-28 text-center reveal">
+                <h3 class="text-3xl font-bold text-slate-800">
+                    Riwayat Jabatan
+                </h3>
+            </div>
+
+            <div class="mt-16 max-w-4xl mx-auto relative">
+                <div class="timeline-line h-full"></div>
+
+                <div class="space-y-12 relative">
+                    @php
+                        // Memisahkan riwayat jabatan per baris
+                        $riwayatItems = array_filter(array_map('trim', explode("\n", $sekda->riwayat_jabatan)));
+                    @endphp
+
+                    @foreach($riwayatItems as $index => $item)
+                        @php
+                            $isEven = $index % 2 === 0;
+                        @endphp
+                        <div class="relative flex {{ $isEven ? 'justify-start' : 'justify-end' }} reveal delay-{{ ($index % 4) + 1 }}">
+                            <div class="{{ $isEven ? 'w-1/2 pr-10 text-right' : 'w-1/2 pl-10 text-left' }}">
+                                <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition">
+                                    <p class="font-semibold text-slate-800 text-base">
+                                        {{ $item }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-teal-600 rounded-full shadow-lg border-4 border-white top-5"></div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
-            <div class="mt-12 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-                <p>&copy; 2025 Hak Cipta Dilindungi. Pemerintah Kabupaten Jeneponto.</p>
+            @endif
+
+            @else
+            <div class="text-center py-20">
+                <i class="fas fa-user-tie text-6xl text-slate-300 mb-4 block"></i>
+                <h3 class="text-xl font-bold text-slate-700">Data Sekretaris Daerah Belum Tersedia</h3>
+                <p class="text-gray-500 mt-2">Silakan input data melalui admin panel.</p>
             </div>
+            @endisset
+
         </div>
-    </footer>
+    </section>
 
-    <script>
-        // Menunggu hingga seluruh dokumen HTML selesai dimuat
-        document.addEventListener('DOMContentLoaded', function() {
+</main>
 
-            // Mengambil semua tombol yang akan memicu dropdown
-            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const reveals = document.querySelectorAll(".reveal");
 
-            dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function(event) {
-                    // Menghentikan event agar tidak langsung ditangkap oleh 'window'
-                    event.stopPropagation();
-
-                    // Menemukan menu dropdown yang sesuai (elemen saudara berikutnya)
-                    const dropdownMenu = this.nextElementSibling;
-
-                    // Menutup semua dropdown lain yang mungkin sedang terbuka
-                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                        if (menu !== dropdownMenu) {
-                            menu.classList.add('hidden');
-                        }
-                    });
-
-                    // Membuka atau menutup dropdown yang diklik
-                    dropdownMenu.classList.toggle('hidden');
-                });
-            });
-
-            // 3. Logika untuk Submenu (nested dropdown)
-            const submenuToggles = document.querySelectorAll('.submenu-toggle');
-
-            submenuToggles.forEach(toggle => {
-                toggle.addEventListener('click', function(event) {
-                    // Cegah link berpindah halaman saat diklik
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    const submenu = this.nextElementSibling;
-
-                    // Tutup semua submenu lain pada level yang sama
-                    const parentMenu = this.closest('.dropdown-menu');
-                    parentMenu.querySelectorAll('.submenu').forEach(s => {
-                        if (s !== submenu) {
-                            s.classList.add('hidden');
-                        }
-                    });
-
-                    submenu.classList.toggle('hidden');
-                });
-            });
-
-            window.addEventListener('click', function() {
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    menu.classList.add('hidden');
-                });
-            });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+            }
         });
-    </script>
+    }, {
+        threshold: 0.15
+    });
 
-    <script>
-        // Toggle menu pada mobile
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            document.getElementById('menu').classList.toggle('hidden');
-        });
-    </script>
-
-</body>
-
-</html>
+    reveals.forEach(reveal => {
+        observer.observe(reveal);
+    });
+});
+</script>
+@endsection

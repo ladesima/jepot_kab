@@ -1,0 +1,237 @@
+/* =========================================================
+   UNIVERSAL LIGHT & DARK THEME ENGINE - KABUPATEN JENEPONTO
+   ========================================================= */
+
+/* Smooth Transitions */
+*, *::before, *::after {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease;
+}
+
+/* =========================================
+   DARK MODE OVERRIDES
+   ========================================= */
+html.dark {
+    color-scheme: dark;
+}
+
+html.dark body {
+    background-color: #0b1120 !important;
+    color: #e2e8f0 !important;
+}
+
+html.dark main {
+    background-color: #0b1120 !important;
+}
+
+/* Hanya reset gradient pada wrapper halaman utama (main) yang memakai gradien terang */
+html.dark main.bg-gradient-to-b,
+html.dark main[class*="from-slate-50"] {
+    background-image: none !important;
+    background-color: #0b1120 !important;
+}
+
+/* PERTAHANKAN OVERLAY GRADIEN PADA FOTO & GALERI AGAR GAMBAR TIDAK HILANG */
+html.dark [class*="to-transparent"],
+html.dark [class*="from-black"],
+html.dark [class*="via-black"],
+html.dark .absolute[class*="bg-gradient-to-"] {
+    background-color: transparent !important;
+}
+
+/* PERTAHANKAN GRADIEN PADA TOMBOL & BADGE */
+html.dark a[class*="bg-gradient-to-"],
+html.dark button[class*="bg-gradient-to-"] {
+    background-color: transparent !important;
+}
+
+html.dark section {
+    background-color: transparent;
+}
+
+/* Headings in Dark Mode */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+    color: #f8fafc;
+}
+
+/* Base Backgrounds in Dark Mode */
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark .bg-slate-50,
+html.dark .bg-slate-100 {
+    background-color: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+html.dark .bg-white {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark .bg-gray-200,
+html.dark .bg-gray-300,
+html.dark .bg-slate-200,
+html.dark .bg-slate-300 {
+    background-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* Text Colors in Dark Mode */
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-black {
+    color: #f8fafc !important;
+}
+
+html.dark .text-gray-700,
+html.dark .text-gray-600,
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+    color: #cbd5e1 !important;
+}
+
+html.dark .text-gray-500,
+html.dark .text-gray-400,
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+    color: #94a3b8 !important;
+}
+
+/* Links in Dark Mode */
+html.dark a.text-blue-600,
+html.dark a.text-blue-700 {
+    color: #60a5fa !important;
+}
+
+html.dark a.text-blue-600:hover,
+html.dark a.text-blue-700:hover {
+    color: #93c5fd !important;
+}
+
+/* Borders in Dark Mode */
+html.dark .border,
+html.dark .border-t,
+html.dark .border-b,
+html.dark .border-l,
+html.dark .border-r,
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-gray-300,
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+    border-color: #334155 !important;
+}
+
+/* Cards & Modals in Dark Mode */
+html.dark .shadow,
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Forms & Inputs in Dark Mode */
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html.dark select,
+html.dark textarea {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+    color: #64748b !important;
+}
+
+html.dark select option {
+    background-color: #1e293b;
+    color: #f8fafc;
+}
+
+/* Tables in Dark Mode */
+html.dark table thead,
+html.dark table thead tr {
+    background-color: #0f172a !important;
+}
+
+html.dark table thead th {
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+html.dark table tbody tr {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+html.dark table tbody tr:hover {
+    background-color: #273549 !important;
+}
+
+html.dark table tbody td {
+    color: #cbd5e1 !important;
+    border-color: #334155 !important;
+}
+
+html.dark table tbody td.font-semibold,
+html.dark table tbody td strong {
+    color: #f8fafc !important;
+}
+
+/* Prose / Detail Content */
+html.dark .prose {
+    color: #cbd5e1 !important;
+}
+
+html.dark .prose h1,
+html.dark .prose h2,
+html.dark .prose h3,
+html.dark .prose h4,
+html.dark .prose strong {
+    color: #f8fafc !important;
+}
+
+/* Preserve Header & Footer aesthetics */
+html.dark header nav,
+html:not(.dark) header nav {
+    background-color: #1e293b !important;
+}
+
+html.dark footer,
+html:not(.dark) footer {
+    background-color: #0f172a !important;
+}
+
+/* Badges / Chips in Dark Mode */
+html.dark .bg-blue-50,
+html.dark .bg-teal-50,
+html.dark .bg-emerald-50,
+html.dark .bg-amber-50 {
+    background-color: rgba(30, 41, 59, 0.9) !important;
+}
+
+/* Theme Toggle Button Animation */
+.theme-toggle-btn {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+}
+
+.theme-toggle-btn i {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+}
+
+.theme-toggle-btn:hover i {
+    transform: rotate(30deg) scale(1.15);
+}

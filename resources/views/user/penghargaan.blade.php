@@ -15,6 +15,24 @@
             }
         }
     </style>
+    <style>
+/* =============================== */
+/* SMOOTH SCROLL REVEAL PER CARD  */
+/* =============================== */
+
+.reveal-item {
+    opacity: 0;
+    transform: translateY(60px) scale(0.97);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal-item.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+</style>
+    
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -97,7 +115,35 @@
     </main>
 
     @include('layouts.footer')
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    // Target card penghargaan saja
+    const cards = document.querySelectorAll(".space-y-10 > div");
+
+    cards.forEach((card, index) => {
+        card.classList.add("reveal-item");
+
+        // Stagger effect otomatis
+        card.style.transitionDelay = (index * 0.1) + "s";
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    document.querySelectorAll(".reveal-item").forEach(item => {
+        observer.observe(item);
+    });
+
+});
+</script>
 
     <script>
         // Menunggu hingga seluruh dokumen HTML selesai dimuat

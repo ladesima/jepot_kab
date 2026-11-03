@@ -14,6 +14,7 @@ class Berita extends Model
     'judul',
     'tanggal_kejadian',
     'isi_berita',
+    'views'
 ];
     //
     public function kategori()

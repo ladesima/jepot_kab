@@ -87,7 +87,7 @@
                                     Berita</label>
                                 <input type="file" id="foto" name="foto" required
                                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-                                <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG, WEBP. Ukuran maks: 2MB.</p>
+                                <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG, WEBP. Ukuran maks: 5MB.</p>
                             </div>
 
                             <div class="mb-6">

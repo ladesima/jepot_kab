@@ -51,7 +51,7 @@
                         {{-- Gambar Utama Artikel --}}
                         @if ($artikel->gambar)
                             <figure class="mb-8">
-                                <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul }}"
+                                <img src="{{ upload_asset($artikel->gambar, 'artikel') }}"
                                     class="w-full h-auto object-cover rounded-xl shadow-lg">
                             </figure>
                         @endif
@@ -103,7 +103,17 @@
     </main>
 
     @include('layouts.footer')
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("{{ url('/artikel/'.$artikel->id.'/increment-view') }}", {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json"
+        }
+    });
+});
+</script>
     <script>
         // Menunggu hingga seluruh dokumen HTML selesai dimuat
         document.addEventListener('DOMContentLoaded', function() {
