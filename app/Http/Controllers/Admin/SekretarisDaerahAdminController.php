@@ -32,10 +32,10 @@ class SekretarisDaerahAdminController extends Controller
             'riwayat_jabatan' => 'nullable',
             'sambutan' => 'nullable',
             'foto' => 'nullable|image|max:2048',
-            'file_lhkpn' => 'nullable|mimes:pdf|max:10240',
+            'file_lhkpn' => 'nullable|mimes:pdf|max:25600',
         ], [
             'file_lhkpn.mimes' => 'Dokumen LHKPN harus berformat PDF.',
-            'file_lhkpn.max' => 'Ukuran dokumen LHKPN maksimal 10MB.',
+            'file_lhkpn.max' => 'Ukuran dokumen LHKPN maksimal 25MB.',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -83,10 +83,10 @@ class SekretarisDaerahAdminController extends Controller
             'riwayat_jabatan' => 'nullable',
             'sambutan' => 'nullable',
             'foto' => 'nullable|image|max:2048',
-            'file_lhkpn' => 'nullable|mimes:pdf|max:10240',
+            'file_lhkpn' => 'nullable|mimes:pdf|max:25600',
         ], [
             'file_lhkpn.mimes' => 'Dokumen LHKPN harus berformat PDF.',
-            'file_lhkpn.max' => 'Ukuran dokumen LHKPN maksimal 10MB.',
+            'file_lhkpn.max' => 'Ukuran dokumen LHKPN maksimal 25MB.',
         ]);
 
         if ($request->hasFile('foto')) {

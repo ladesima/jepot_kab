@@ -156,7 +156,7 @@
                                 <label for="file_lhkpn" class="form-label">Dokumen LHKPN (PDF)</label>
                                 <input class="form-control @error('file_lhkpn') is-invalid @enderror" type="file"
                                     id="file_lhkpn" name="file_lhkpn" accept=".pdf,application/pdf">
-                                <small class="text-muted">Format file: PDF (Maksimal 10MB). Kosongkan jika tidak ingin mengubah dokumen.</small>
+                                <small class="text-muted">Format file: PDF (Maksimal 25MB). Kosongkan jika tidak ingin mengubah dokumen.</small>
                                 @error('file_lhkpn')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

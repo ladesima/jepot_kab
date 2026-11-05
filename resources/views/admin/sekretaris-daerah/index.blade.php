@@ -124,7 +124,7 @@
                     <label class="block text-sm font-bold text-gray-700 mb-1">Dokumen LHKPN (PDF)</label>
                     <input type="file" name="file_lhkpn" accept=".pdf,application/pdf"
                            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700 file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
-                    <p class="text-xs text-gray-400 mt-1">Format: PDF (Maksimal 10MB). Kosongkan jika tidak ingin mengubah dokumen.</p>
+                    <p class="text-xs text-gray-400 mt-1">Format: PDF (Maksimal 25MB). Kosongkan jika tidak ingin mengubah dokumen.</p>
 
                     @if(!empty($sekda->file_lhkpn))
                         <div class="mt-3 flex items-center justify-between p-3.5 bg-gray-50 border border-gray-200 rounded-xl">

@@ -44,7 +44,7 @@ class KepalaDaerahController extends Controller
             'anak' => 'nullable|string|max:255',
             'riwayat_jabatan' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'file_lhkpn' => 'nullable|mimes:pdf|max:10240', // Maksimal 10MB PDF
+            'file_lhkpn' => 'nullable|mimes:pdf|max:25600', // Maksimal 25MB PDF
         ], [
             // Pesan error custom
             'nama.required' => 'Nama wajib diisi.',
@@ -53,7 +53,7 @@ class KepalaDaerahController extends Controller
             'foto.image' => 'File harus berupa gambar (jpg, jpeg, png, webp).',
             'foto.max' => 'Ukuran foto maksimal 2MB.',
             'file_lhkpn.mimes' => 'Dokumen LHKPN harus berformat PDF.',
-            'file_lhkpn.max' => 'Ukuran dokumen LHKPN maksimal 10MB.',
+            'file_lhkpn.max' => 'Ukuran dokumen LHKPN maksimal 25MB.',
         ]);
 
         $kepalaDaerah = KepalaDaerah::findOrFail($id);
